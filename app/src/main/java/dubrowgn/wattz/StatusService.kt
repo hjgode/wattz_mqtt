@@ -24,6 +24,7 @@ class StatusService : Service() {
     private lateinit var snapshot: BatterySnapshot
     private val task = PeriodicTask({ update() }, intervalMs)
 
+    private lateinit  var mymqtt : MyMQTT
     private fun debug(msg: String) {
         Log.d(this::class.java.name, msg)
     }
@@ -60,6 +61,8 @@ class StatusService : Service() {
     private fun init() {
         battery = Battery(applicationContext)
         snapshot = battery.snapshot()
+
+        mymqtt= MyMQTT(applicationContext)
 
         noteMgr = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         noteMgr.createNotificationChannel(
@@ -189,6 +192,8 @@ class StatusService : Service() {
                 }
             )
             .putExtra("voltage", fmt(snapshot.volts) + "V")
+
+        mymqtt.doPublish(snapshot.levelPercent, snapshot.charging)
 
         applicationContext.sendBroadcast(intent)
     }

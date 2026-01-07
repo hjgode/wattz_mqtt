@@ -34,6 +34,11 @@ android {
 }
 
 dependencies {
+
+//    implementation("com.hivemq:hivemq-mqtt-client:1.3.3")
+    implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0")
+//    implementation("org.eclipse.paho:org.eclipse.paho.android.service:1.1.1")
+
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 }
